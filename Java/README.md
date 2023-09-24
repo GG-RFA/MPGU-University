@@ -2,4 +2,5 @@
 - "My First Application";
 - "My First Application 2";
 - "Text Application";
-- "Practical Work 4".
+- "Practical Work 4";
+- "Coffee App".
