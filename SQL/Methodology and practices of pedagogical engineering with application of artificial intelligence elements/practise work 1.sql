@@ -14,14 +14,14 @@ CREATE TABLE `pet` (
   `sex` CHAR(1),
   `birth` DATE,
   `death` DATE
-);
+) ENGINE=InnoDB;
 /* Создаём таблицу `event` */
 CREATE TABLE `event` (
   `name` VARCHAR(20),
   `date` DATE,
   `type` VARCHAR(15),
    `remark` VARCHAR(255)
-);
+) ENGINE=InnoDB;
 /* Заполняем таблицу `pet` данными */
 INSERT INTO `pet` (`name`, `owner`,`species`,`sex`,`birth`,`death`) VALUES
 ('Fluffy', 'Harold', 'cat', 'f', '2005-02-04', NULL),
