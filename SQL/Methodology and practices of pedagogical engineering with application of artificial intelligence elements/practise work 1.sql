@@ -1,7 +1,7 @@
 /* Дропаем таблицу, если она существует */
 DROP DATABASE IF EXISTS `PRACTISEWORK1`;
 /* Создаём таблицу, даём ей название и настраиваем кодировку */
-CREATE DATABASE `PRACTISEWORK1` COLLATE=`utf8_unicode_ci`;
+CREATE DATABASE `PRACTISEWORK1` COLLATE=`utf8mb4_unicode_ci`;
 USE `PRACTISEWORK1`;
 /* Дропаем таблицы, если они существуют */
 DROP TABLE IF EXISTS `pet`;
