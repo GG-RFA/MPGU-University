@@ -15,7 +15,7 @@ CREATE TABLE `provider` (
   /* Задаём первичный ключ */
   PRIMARY KEY (`provider_id`)
 ) ENGINE=InnoDB;
-/* Создаём таблицу `provider` */
+/* Создаём таблицу `product` */
 CREATE TABLE `product` (
   `provider_id` INT(2) ZEROFILL,
   `product_id` INT(3) ZEROFILL,
