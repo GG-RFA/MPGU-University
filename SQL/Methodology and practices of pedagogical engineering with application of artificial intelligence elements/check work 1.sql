@@ -23,7 +23,7 @@ CREATE TABLE `product` (
   `product_name` VARCHAR(20),
   `product_count` INT,
   `price` INT,
-  /* Задаём первичный ключ */
+  /* Задаём первичные ключи */
   PRIMARY KEY (`provider_id`, `product_id`),
   /* Задаём внешний ключ для связки таблиц */
   CONSTRAINT `FK_product` FOREIGN KEY (`provider_id`) REFERENCES `provider` (`provider_id`) ON DELETE RESTRICT ON UPDATE CASCADE
