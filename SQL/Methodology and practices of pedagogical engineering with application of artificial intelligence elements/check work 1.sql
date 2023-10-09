@@ -26,7 +26,7 @@ CREATE TABLE `product` (
   /* Задаём первичный ключ */
   PRIMARY KEY (`provider_id`, `product_id`),
   /* Задаём внешний ключ для связки таблиц */
-  CONSTRAINT `FK_product` FOREIGN KEY (`provider_id`) REFERENCES `provider` (`provider_id`) ON DELETE NO ACTION ON UPDATE CASCADE
+  CONSTRAINT `FK_product` FOREIGN KEY (`provider_id`) REFERENCES `provider` (`provider_id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 /* Заполняем таблицу `provider` данными */
 INSERT INTO `provider` (`provider_id`, `provider_name`, `INN`, `date_of_registration`, `address`, `phone`) VALUES
