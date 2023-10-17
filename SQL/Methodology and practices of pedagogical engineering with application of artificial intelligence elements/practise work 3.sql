@@ -18,7 +18,9 @@ CREATE TABLE `groups` (
 /* Задаём первичный ключ */
 PRIMARY KEY (`code_group`),
 /* Задаём внешний ключ для связки таблиц */
-CONSTRAINT `FK_groups` FOREIGN KEY (`code_faculty`) REFERENCES `faculties` (`code_faculty`) ON DELETE RESTRICT ON UPDATE CASCADE
+CONSTRAINT `FK_groups` FOREIGN KEY (`code_faculty`) 
+REFERENCES `faculties` (`code_faculty`) 
+ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 /* Создаём таблицу `students` */
 CREATE TABLE `students` (
@@ -28,7 +30,9 @@ CREATE TABLE `students` (
 /* Задаём первичный ключ */
 PRIMARY KEY (`code_student`),
 /* Задаём внешний ключ для связки таблиц */
-CONSTRAINT `FK_students` FOREIGN KEY (`code_group`) REFERENCES `groups` (`code_group`) ON DELETE RESTRICT ON UPDATE CASCADE
+CONSTRAINT `FK_students` FOREIGN KEY (`code_group`) 
+REFERENCES `groups` (`code_group`) 
+ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 /* Создаём таблицу `marks` */
 CREATE TABLE `marks` (
@@ -40,10 +44,13 @@ CREATE TABLE `marks` (
 /* Задаём первичный ключ */
 PRIMARY KEY (`code_mark`),
 /* Задаём внешний ключ для связки таблиц */
-CONSTRAINT `FK_marks` FOREIGN KEY (`code_student`) REFERENCES `students` (`code_student`) ON DELETE RESTRICT ON UPDATE CASCADE
+CONSTRAINT `FK_marks` FOREIGN KEY (`code_student`) 
+REFERENCES `students` (`code_student`) 
+ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 /* Создаём индекс для таблицы `marks` */
-CREATE INDEX `marks_code_discipline` ON `marks` (`code_discipline`);
+CREATE INDEX `marks_code_discipline` 
+ON `marks` (`code_discipline`);
 /* Создаём таблицу `disciplines` */
 CREATE TABLE `disciplines` (
 `code_discipline` INT,
@@ -51,7 +58,9 @@ CREATE TABLE `disciplines` (
 /* Задаём первичный ключ */
 PRIMARY KEY (`code_discipline`),
 /* Задаём внешний ключ для связки таблиц */
-CONSTRAINT `FK_disciplines` FOREIGN KEY (`code_discipline`) REFERENCES `marks` (`code_discipline`) ON DELETE RESTRICT ON UPDATE CASCADE
+CONSTRAINT `FK_disciplines` FOREIGN KEY (`code_discipline`) 
+REFERENCES `marks` (`code_discipline`) 
+ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 /* Заполняем таблицу `faculties` данными */
 INSERT INTO `faculties` (`code_faculty`, `name_faculty`) VALUES
@@ -109,24 +118,35 @@ INSERT INTO `disciplines` (`code_discipline`, `name_discipline`) VALUES
 (6, 'Уголовное право');
 /* - Задание № 2 - */
 /* Создаём запрос с оператором OR, позволяющий выбрать информацию об оценках, полученных 25.01.2014 или 13.03.2014, или 25.03.2014 */
-SELECT * FROM `marks` WHERE `datе`='2014-01-25' OR `datе`='2014-03-13' OR `datе`='2014-03-25';
+SELECT * 
+FROM `marks` 
+WHERE `datе`='2014-01-25' OR `datе`='2014-03-13' OR `datе`='2014-03-25';
 /* Создаём аналогичный запрос с оператором IN */
-SELECT * FROM `marks` WHERE `datе` IN ('2014-01-25', '2014-03-13', '2014-03-25');
+SELECT * 
+FROM `marks` 
+WHERE `datе` IN ('2014-01-25', '2014-03-13', '2014-03-25');
 /* - Задание № 3 - */
 /* Создаём запрос, где выбираем информацию об оценках, лежащих в диапазоне от 2 до 4 */
-SELECT * FROM `marks` WHERE `mark` BETWEEN 2 AND 4;
+SELECT * 
+FROM `marks` 
+WHERE `mark` BETWEEN 2 AND 4;
 /* - Задание № 4 - */
 /* Создаём запрос, где выбираем информацию о студентах, фамилия которых начинается с "C" и заканчивается "ов" */
-SELECT `full_name` FROM `students` WHERE `full_name` LIKE 'С%ов _._.';
+SELECT `full_name` 
+FROM `students` 
+WHERE `full_name` LIKE 'С%ов _._.';
 /* - Задание № 5 - */
 /* Создаём запрос, где выбираем данные обо всех студентах, фамилии которых известны */
-SELECT `full_name` FROM `students` WHERE `full_name` IS NOT NULL;
+SELECT `full_name` 
+FROM `students` 
+WHERE `full_name` IS NOT NULL;
 /* Создаём запрос, используя оператор CASE */
 SELECT `code_student`, `code_group`,
 CASE 
     WHEN `full_name` IS NULL THEN 'Нет данных' 
     ELSE `full_name`
-END AS `results` FROM `students`;
+END AS `results` 
+FROM `students`;
 /* - Задание № 6 - */
 /* Создаём запрос, где выводим поля с названиями ФИО и Код_группы для всех студентов, имеющих Код_студента > 6 */
 SELECT `full_name` AS `Full name`, `code_group` AS `Code group`
@@ -137,66 +157,87 @@ SELECT CONCAT('Группа-', UPPER(`number_group`)) AS `Group number`
 FROM `groups`;
 /* Создаём запрос, где выводим информацию вида "Группа-501а" для всех групп, номер которых начинается с 5 */
 SELECT CONCAT('Группа-', SUBSTRING(`number_group`, 1, 3), ' (выпускники)') AS `Group name`
-FROM `groups` WHERE `number_group` LIKE '5%';
+FROM `groups` 
+WHERE `number_group` 
+LIKE '5%';
 /* - Задание № 8 - */
 /* Создаём запрос по таблице "Студенты", где выбираем всю информацию о студентах, для которых известны ФИО. ФИО упорядочиваем по убыванию */
-SELECT * FROM `students` WHERE `full_name` IS NOT NULL
+SELECT * 
+FROM `students` 
+WHERE `full_name` IS NOT NULL
 ORDER BY `full_name` DESC;
 /* Создаём запрос, где упорядочиваем всех студентов после десятого сначала по коду группы, затем по ФИО */
-SELECT `code_group`, `full_name` FROM `students` WHERE `code_student` > 10
+SELECT `code_group`, `full_name` 
+FROM `students` 
+WHERE `code_student` > 10
 ORDER BY `code_group` ASC, `full_name` DESC;
 /* Создаём запрос по любой из таблиц, где выполняем упорядочивание по трём столбцам */
 SELECT * FROM `marks` 
 ORDER BY `code_discipline` ASC, `code_student` ASC, `mark` DESC;
 /* Переписываем второй запрос */
-SELECT `code_group`, `full_name` FROM `students` WHERE `code_student` > 5 
+SELECT `code_group`, `full_name` 
+FROM `students` 
+WHERE `code_student` > 5 
 ORDER BY 1 ASC, 2 DESC;
 /* Переписываем третий запрос */
 SELECT * FROM `marks` 
 ORDER BY 2 ASC, 3 ASC, 4 DESC;
 /* - Задание № 9 - */
 /* Создаём запрос, где вычисляем среднее значение */
-SELECT AVG(CAST(`mark` AS FLOAT)) AS `Average mark`, COUNT(*) AS `Total marks` FROM `marks`;
+SELECT AVG(CAST(`mark` AS FLOAT)) AS `Average mark`, COUNT(*) AS `Total marks` 
+FROM `marks`;
 /* Переписываем первый запрос, где заменяем COUNT(*) на COUNT() и подбираем столбец в качестве аргумента */
-SELECT AVG(CAST(`mark` AS FLOAT)) AS `Average mark`, COUNT(`mark`) AS `Total marks` FROM `marks`
+SELECT AVG(CAST(`mark` AS FLOAT)) AS `Average mark`, COUNT(`mark`) AS `Total marks` 
+FROM `marks`
 WHERE `code_discipline` = 2;
 /* Создаём 3 запроса, где будут использоваться агрегирующие функции */
 /* Создаём 1-й запрос, где производим выборку количества студентов в каждой группе */
-SELECT `code_group`, COUNT(*) as `students_count` FROM `students` 
+SELECT `code_group`, COUNT(*) as `students_count` 
+FROM `students` 
 GROUP BY `code_group`;
 /* Создаём 2-й запрос, где производим выборку максимальной оценки по каждому предмету */
-SELECT `code_discipline`, MAX(`mark`) as `Max mark` FROM `marks` 
+SELECT `code_discipline`, MAX(`mark`) as `Max mark` 
+FROM `marks` 
 GROUP BY `code_discipline`;
 /* Создаём 3-й запрос, где производим выборку минимальной и максимальной оценки по каждому студенту */
-SELECT `code_student`, MIN(`mark`) as `Min mark`, MAX(`mark`) as `Max mark` FROM `marks` 
+SELECT `code_student`, MIN(`mark`) as `Min mark`, MAX(`mark`) as `Max mark` 
+FROM `marks` 
 GROUP BY `code_student`;
 /* Создаём запрос, где используем оператор DISTINCT, отбрасывающий все дубликаты значений, в том числе и NULL */
-SELECT COUNT(DISTINCT `mark`) FROM `marks`;
+SELECT COUNT(DISTINCT `mark`) 
+FROM `marks`;
 /* Создаём запрос, где используем оператор DISTINCT с другой агрегирующей функцией */
-SELECT AVG(DISTINCT `mark`) FROM `marks`;
+SELECT AVG(DISTINCT `mark`) 
+FROM `marks`;
 /* - Задание № 10 - */
 /* Создаём запрос, где получаем список фамилий студентов с указанием групп, в которых они учатся */
-SELECT `students`.`full_name`, `groups`.`number_group` FROM `students`, `groups`
+SELECT `students`.`full_name`, `groups`.`number_group` 
+FROM `students`, `groups`
 WHERE `students`.`code_group` = `groups`.`code_group`;
 /* Изменяем запрос, где в список входят студенты, фамилии которых начинаются на "А" и на "В" */
-SELECT `students`.`full_name`, `groups`.`number_group` FROM `students`, `groups`
+SELECT `students`.`full_name`, `groups`.`number_group` 
+FROM `students`, `groups`
 WHERE `students`.`code_group` = `groups`.`code_group` AND (`students`.`full_name` LIKE 'А%' OR `students`.`full_name` LIKE 'В%');
 /* - Задание № 11 - */
 /* Создаём многотабличный запрос с использованием псевдонимов */
-SELECT `full_name`, `number_group` FROM `students` `a`, `groups` `b`
+SELECT `full_name`, `number_group` 
+FROM `students` `a`, `groups` `b`
 WHERE `a`.`code_group` = `b`.`code_group` 
 ORDER BY `a`.`full_name`;
 /* Создаём запрос к трём связанным таблицам */
-SELECT `name_faculty`, `full_name` FROM `faculties` `a`, `students` `b`, `groups` `c`
+SELECT `name_faculty`, `full_name` 
+FROM `faculties` `a`, `students` `b`, `groups` `c`
 WHERE `a`.`code_faculty` = `c`.`code_faculty` AND `c`.`code_group` = `b`.`code_group`
 ORDER BY `a`.`name_faculty`;
 /* - Задание № 12 - */
 /* Создаём запрос, эквивалентный запросу 1 из задания № 11, но уже с использованием внутреннего соединения таблиц */
-SELECT `full_name`, `number_group` FROM `students` `a` 
+SELECT `full_name`, `number_group` 
+FROM `students` `a` 
 INNER JOIN `groups` `b` ON `a`.`code_group` = `b`.`code_group`
 ORDER BY `a`.`full_name`;
 /* Создаём запрос, эквивалентный запросу 2 из задания № 11, но уже с использованием внутреннего соединения таблиц */
-SELECT `name_faculty`, `full_name` FROM `faculties` `a`
+SELECT `name_faculty`, `full_name` 
+FROM `faculties` `a`
 INNER JOIN `groups` `c` ON `a`.`code_faculty`=`c`.`code_faculty`
 INNER JOIN `students` `b` ON `c`.`code_group`=`b`.`code_group`
 ORDER BY `a`.`name_faculty`;
