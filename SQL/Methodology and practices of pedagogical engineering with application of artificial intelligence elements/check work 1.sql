@@ -15,7 +15,7 @@ CREATE TABLE `provider` (
   /* Задаём первичный ключ */
   PRIMARY KEY (`provider_id`)
 ) ENGINE=InnoDB;
-/* Создаём таблицу `product` */
+/* Создаём таблицу `provider` */
 CREATE TABLE `product` (
   `provider_id` INT(2) ZEROFILL,
   `product_id` INT(3) ZEROFILL,
@@ -23,10 +23,12 @@ CREATE TABLE `product` (
   `product_name` VARCHAR(20),
   `product_count` INT,
   `price` INT,
-  /* Задаём первичные ключи */
+  /* Задаём первичный ключ */
   PRIMARY KEY (`provider_id`, `product_id`),
   /* Задаём внешний ключ для связки таблиц */
-  CONSTRAINT `FK_product` FOREIGN KEY (`provider_id`) REFERENCES `provider` (`provider_id`) ON DELETE RESTRICT ON UPDATE CASCADE
+  CONSTRAINT `FK_product` FOREIGN KEY (`provider_id`) 
+  REFERENCES `provider` (`provider_id`) 
+  ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 /* Заполняем таблицу `provider` данными */
 INSERT INTO `provider` (`provider_id`, `provider_name`, `INN`, `date_of_registration`, `address`, `phone`) VALUES
@@ -39,18 +41,28 @@ INSERT INTO `product` (`provider_id`, `product_id`,`article`,`product_name`,`pro
 (02, 002, 12220000, 'Маска одноразовая', 5000, 20),
 (03, 003, 80000456, 'Нош-па', 200, 50);
 /* Создаём запрос, где выбираем/выводим названия, количество и цену всех товаров, поставляемых поставщиком ООО Медсервис, и сортируем полученные данные по алфавиту */
-SELECT `product`.`product_name`, `product`.`product_count`, `product`.`price` FROM `product` 
-INNER JOIN `provider` ON `product`.`provider_id` = `provider`.`provider_id` WHERE `provider`.`provider_name` = 'ООО Медсервис'
+SELECT `product`.`product_name`, `product`.`product_count`, `product`.`price` 
+FROM `product` 
+INNER JOIN `provider` ON `product`.`provider_id` = `provider`.`provider_id` 
+WHERE `provider`.`provider_name` = 'ООО Медсервис'
 ORDER BY `product`.`product_name`;
 /* Создаём запрос, где подсчитываем количество товаров, цена которых меньше 1000 руб., но при этом больше 100 руб. */
-SELECT COUNT(*) FROM `product` WHERE `price` > 100 AND `price` < 1000;
+SELECT COUNT(*) 
+FROM `product` 
+WHERE `price` > 100 AND `price` < 1000;
 /* Создаём запрос, где выбираем/выводим названия товаров и их артикул, количество которых больше чем 500 шт. на складе */
-SELECT `product`.`product_name`, `product`.`article` FROM `product` WHERE `product_count` > 500;
+SELECT `product`.`product_name`, `product`.`article`
+FROM `product` 
+WHERE `product_count` > 500;
 /* Отключаем режим безопасного обновления для избежания ошибки */
 SET SQL_SAFE_UPDATES = 0;
 /* Создаём запрос, где удаляем товары, цена которых меньше 10 руб. и в названии есть буквосочетание "энерго" */
-DELETE FROM `product` WHERE `price` < 10 AND `product_name` LIKE '%энерго%';
+DELETE 
+FROM `product` 
+WHERE `price` < 10 AND `product_name` LIKE '%энерго%';
 /* Включаем режим безопасного обновления */
 SET SQL_SAFE_UPDATES = 1;
 /* Создаём запрос, где выводим всю информацию о товарах и название их поставщиков */
-SELECT * FROM `product` INNER JOIN `provider` ON `product`.`provider_id` = `provider`.`provider_id`;
+SELECT * 
+FROM `product` 
+INNER JOIN `provider` ON `product`.`provider_id` = `provider`.`provider_id`;
