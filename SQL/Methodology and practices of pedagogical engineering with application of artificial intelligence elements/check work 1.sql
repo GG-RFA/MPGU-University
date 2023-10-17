@@ -54,14 +54,10 @@ WHERE `price` > 100 AND `price` < 1000;
 SELECT `product`.`product_name`, `product`.`article`
 FROM `product` 
 WHERE `product_count` > 500;
-/* Отключаем режим безопасного обновления для избежания ошибки */
-SET SQL_SAFE_UPDATES = 0;
 /* Создаём запрос, где удаляем товары, цена которых меньше 10 руб. и в названии есть буквосочетание "энерго" */
 DELETE 
 FROM `product` 
 WHERE `price` < 10 AND `product_name` LIKE '%энерго%';
-/* Включаем режим безопасного обновления */
-SET SQL_SAFE_UPDATES = 1;
 /* Создаём запрос, где выводим всю информацию о товарах и название их поставщиков */
 SELECT * 
 FROM `product` 
