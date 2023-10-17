@@ -31,7 +31,9 @@ CREATE TABLE `products` (
   /* Задаём первичный ключ */
   PRIMARY KEY (`BL`, `PR`),
    /* Задаём внешний ключ для связки таблиц */
-  CONSTRAINT `FK_products` FOREIGN KEY (`BL`) REFERENCES `business_menu` (`BL`) ON DELETE RESTRICT ON UPDATE CASCADE
+  CONSTRAINT `FK_products` FOREIGN KEY (`BL`) 
+  REFERENCES `business_menu` (`BL`) 
+  ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 /* Заполняем таблицу `business_menu` данными */
 INSERT INTO `business_menu` (`BL`, `name`, `basis`, `type`, `price_of_portion`) VALUES
@@ -73,23 +75,39 @@ INSERT INTO `products` (`BL`, `PR`, `product`, `protein`, `fats`, `carbohydrates
 (17, 17, 'Кофе', 127, 36, 9, 9710, 180, 180, 0.3, 1.8, 0);
 /* Создаём запросы, где выводим тремя разными способами все блюда, стоимость каждого из которых находится в диапазоне от 10 до 99 рублей */
 /* 1-й способ */
-SELECT * FROM `business_menu` WHERE `price_of_portion` BETWEEN 10 AND 99;
+SELECT * 
+FROM `business_menu` 
+WHERE `price_of_portion` BETWEEN 10 AND 99;
 /* 2-й способ */
-SELECT * FROM `business_menu` WHERE `price_of_portion` >= 10 AND `price_of_portion` <= 99;
+SELECT * 
+FROM `business_menu` 
+WHERE `price_of_portion` >= 10 AND `price_of_portion` <= 99;
 /* 3-й способ */
-SELECT * FROM `business_menu` WHERE `price_of_portion` IN (SELECT `price_of_portion` FROM `business_menu` 
-WHERE `price_of_portion` >= 10 AND `price_of_portion` <= 99);
+SELECT * 
+FROM `business_menu` 
+WHERE `price_of_portion` IN (SELECT `price_of_portion` FROM `business_menu` WHERE `price_of_portion` >= 10 AND `price_of_portion` <= 99);
 /* Создаём запрос, где вычисляем количество блюд каждого вида в порядке, обратном алфавиту */
-SELECT `type`, COUNT(*) AS `count` FROM `business_menu` GROUP BY `type` ORDER BY `type` DESC;
+SELECT `type`, COUNT(*) AS `count` 
+FROM `business_menu` 
+GROUP BY `type` 
+ORDER BY `type` DESC;
 /* Создаём запрос, где выводим все продукты, не содержащие жиров, упорядочив их основу по алфавиту */
 SELECT `products`.`product`, `products`.`protein`, `products`.`fats`, `products`.`carbohydrates`, `products`.`K`, `products`.`Ca`, `products`.`Na`, 
-`products`.`B2`, `products`.`PP`, `products`.`C` FROM `products` JOIN `business_menu` ON `products`.`BL` = `business_menu`.`BL` WHERE `products`.`fats` = 0 
+`products`.`B2`, `products`.`PP`, `products`.`C` 
+FROM `products` 
+JOIN `business_menu` ON `products`.`BL` = `business_menu`.`BL` 
+WHERE `products`.`fats` = 0 
 ORDER BY `business_menu`.`basis` ASC;
 /* Создаём запрос, где выводим содержание белков и углеводов для каждого блюда */
-SELECT `name`, `protein`, `carbohydrates` FROM `business_menu`LEFT JOIN `products` ON `basis` = `product`;
+SELECT `name`, `protein`, `carbohydrates` 
+FROM `business_menu` 
+LEFT JOIN `products` 
+ON `basis` = `product`;
 /* Создаём запрос, где рассчитываем калорийность каждого блюда по формуле: ((Белки + Углеводы)*4.1 + Жиры*9.3) */
-SELECT `name`, ((`protein` + `carbohydrates`) * 4.1 + `fats` * 9.3) AS `calories` FROM `business_menu`
-LEFT JOIN `products` ON `basis` = `product`;
+SELECT `name`, ((`protein` + `carbohydrates`) * 4.1 + `fats` * 9.3) AS `calories` 
+FROM `business_menu`
+LEFT JOIN `products` 
+ON `basis` = `product`;
 /* Отключаем режим безопасного обновления для избежания ошибки */
 SET SQL_SAFE_UPDATES = 0;
 /* Создаём запрос, где обновляем данные в таблице: уменьшаем в 2 раза стоимость блюд на основе молока */
@@ -99,6 +117,7 @@ SET SQL_SAFE_UPDATES = 1;
 /* Отключаем режим безопасного обновления для избежания ошибки */
 SET SQL_SAFE_UPDATES = 0;
 /* Создаём запрос, где удаляем из таблицы записи о блюдах, в состав которых входит картофель */
-DELETE FROM `business_menu` WHERE `basis` IN (SELECT `product` FROM `products` WHERE `product` = 'Картофель');
+DELETE FROM `business_menu` 
+WHERE `basis` IN (SELECT `product` FROM `products` WHERE `product` = 'Картофель');
 /* Включаем режим безопасного обновления */
 SET SQL_SAFE_UPDATES = 1;
