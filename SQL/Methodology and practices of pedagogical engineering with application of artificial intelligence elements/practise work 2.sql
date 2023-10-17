@@ -106,18 +106,10 @@ LEFT JOIN `products` ON `basis` = `product`;
 SELECT `name`, ((`protein` + `carbohydrates`) * 4.1 + `fats` * 9.3) AS `calories` 
 FROM `business_menu`
 LEFT JOIN `products` ON `basis` = `product`;
-/* Отключаем режим безопасного обновления для избежания ошибки */
-SET SQL_SAFE_UPDATES = 0;
 /* Создаём запрос, где обновляем данные в таблице: уменьшаем в 2 раза стоимость блюд на основе молока */
 UPDATE `business_menu` 
 SET `price_of_portion` = `price_of_portion` / 2 
 WHERE `basis` = 'Молоко';
-/* Включаем режим безопасного обновления */
-SET SQL_SAFE_UPDATES = 1;
-/* Отключаем режим безопасного обновления для избежания ошибки */
-SET SQL_SAFE_UPDATES = 0;
 /* Создаём запрос, где удаляем из таблицы записи о блюдах, в состав которых входит картофель */
 DELETE FROM `business_menu` 
 WHERE `basis` IN (SELECT `product` FROM `products` WHERE `product` = 'Картофель');
-/* Включаем режим безопасного обновления */
-SET SQL_SAFE_UPDATES = 1;
