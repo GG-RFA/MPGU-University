@@ -77,14 +77,14 @@ INSERT INTO `products` (`BL`, `PR`, `product`, `protein`, `fats`, `carbohydrates
 /* 1-й способ */
 SELECT * 
 FROM `business_menu` 
-WHERE `price_of_portion` BETWEEN 10 AND 99;
+WHERE `price_of_portion` 
+BETWEEN 10 AND 99;
 /* 2-й способ */
 SELECT * 
 FROM `business_menu` 
 WHERE `price_of_portion` >= 10 AND `price_of_portion` <= 99;
 /* 3-й способ */
-SELECT * 
-FROM `business_menu` 
+SELECT * FROM `business_menu` 
 WHERE `price_of_portion` IN (SELECT `price_of_portion` FROM `business_menu` WHERE `price_of_portion` >= 10 AND `price_of_portion` <= 99);
 /* Создаём запрос, где вычисляем количество блюд каждого вида в порядке, обратном алфавиту */
 SELECT `type`, COUNT(*) AS `count` 
@@ -101,17 +101,17 @@ ORDER BY `business_menu`.`basis` ASC;
 /* Создаём запрос, где выводим содержание белков и углеводов для каждого блюда */
 SELECT `name`, `protein`, `carbohydrates` 
 FROM `business_menu` 
-LEFT JOIN `products` 
-ON `basis` = `product`;
+LEFT JOIN `products` ON `basis` = `product`;
 /* Создаём запрос, где рассчитываем калорийность каждого блюда по формуле: ((Белки + Углеводы)*4.1 + Жиры*9.3) */
 SELECT `name`, ((`protein` + `carbohydrates`) * 4.1 + `fats` * 9.3) AS `calories` 
 FROM `business_menu`
-LEFT JOIN `products` 
-ON `basis` = `product`;
+LEFT JOIN `products` ON `basis` = `product`;
 /* Отключаем режим безопасного обновления для избежания ошибки */
 SET SQL_SAFE_UPDATES = 0;
 /* Создаём запрос, где обновляем данные в таблице: уменьшаем в 2 раза стоимость блюд на основе молока */
-UPDATE `business_menu` SET `price_of_portion` = `price_of_portion` / 2 WHERE `basis` = 'Молоко';
+UPDATE `business_menu` 
+SET `price_of_portion` = `price_of_portion` / 2 
+WHERE `basis` = 'Молоко';
 /* Включаем режим безопасного обновления */
 SET SQL_SAFE_UPDATES = 1;
 /* Отключаем режим безопасного обновления для избежания ошибки */
