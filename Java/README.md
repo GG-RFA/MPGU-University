@@ -4,4 +4,5 @@
 - "My First Application 2";
 - "Text Application";
 - "Coffee App";
-- "Random App"
+- "Random App";
+- "Navigation-App-1".
