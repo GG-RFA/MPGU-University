@@ -8,7 +8,7 @@ USE `SCHOOL`;
 CREATE TABLE `pupils` (
 `pupil_id` INT,
 `full_name` VARCHAR(60),
-`photo` VARCHAR(521),
+`photo` VARCHAR(512),
 `email` VARCHAR(60),
 `phone_number` VARCHAR(20),
 `additional_information` VARCHAR(255),
