@@ -34,28 +34,28 @@
   <script type="text/javascript"> 
     // Создаём массив наименований планет 
     const solarSys = ["Меркурий","Венера","Земля","Марс","Юпитер","Сатурн","Уран","Нептун"];
-	// Реализуем нахождение элемента по заданному идентификатору и выводим данные
+    // Реализуем нахождение элемента по заданному идентификатору и выводим данные
     document.getElementById("planetsList").innerHTML = solarSys.map(planet => "<li>" + planet + "</li>").join("");
-	// Выводим данные в консоль
-	 console.log(solarSys); 
+    // Выводим данные в консоль
+    console.log(solarSys); 
     // Создаём переменную, которая будет высчитывать длину массива solarSys 
     const n = solarSys.length;
     document.getElementById("planetCount").innerText = n;
-	console.log("Количество планет: ",n); 
+    console.log("Количество планет: ",n); 
     // Создаём массив, где приведены данные расстояния до Солнца в млн км 
     const solarDist = [57.9,108.2,149.6,227.9,778.5,1433,2877,4503];
     document.getElementById("distList").innerHTML = solarDist.map(dist => "<li>" + dist + "</li>").join("");
-	console.log(solarDist); 
+    console.log(solarDist); 
     // Создаём переменную, которой присваиваем значение астрономической единицы а.е.= 149597870.9  км 
     const ae = 149597870.9;
     document.getElementById("aeValue").innerText = ae; 
-	console.log("a.e.=",ae," км"); 
+    console.log("a.e.=",ae," км"); 
     // Создаём переменную, в котором будет производиться рассчёт данных из массива solarDist 
-	// для получения данных о расстоянии от Солнца до планет в астрономических единицах (а.е.)
-	// и их округления (задано отображение 3 чисел после запятой).
+    // для получения данных о расстоянии от Солнца до планет в астрономических единицах (а.е.)
+    // и их округления (задано отображение 3 чисел после запятой).
     const solarDistAE = solarDist.map(dist => ((dist * 1000000) / ae).toFixed(3));
     document.getElementById("distListAE").innerHTML = solarDistAE.map(dist => "<li>" + dist + "</li>").join("");
-	console.log(solarDistAE);
+    console.log(solarDistAE);
   </script> 
 </body> 
 </html>
