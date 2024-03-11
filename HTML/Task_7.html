@@ -27,10 +27,10 @@
   <!-- Используем скрипт, который будет выводить текст при нажатии на кнопку -->
   <script type="text/javascript">
     function showGreeting() {
-	<!-- Объявляем переменные name и greeting, которые будут находить элементы по заданным идентификаторам -->
+	// Объявляем переменные name и greeting, которые будут находить элементы по заданным идентификаторам
         const name = document.getElementById('nameInput').value;
         const greetings = document.getElementById('greeting');
-	<!-- Реализуем вывод сообщения -->
+	// Реализуем вывод сообщения
         greetings.innerHTML = 'Приветствую, <span class="nameColor">' + name + '</span>!';
     }
   </script>
